@@ -1,9 +1,24 @@
 <template>
-  <div class="bonus-deck deck">
-    <div class="bonus-deck-text">Bónusz-játék</div>
-    <hand class="hand-1" :hand="hand1" />
-    <hand class="hand-2" :hand="hand2" />
-    <hand class="hand-3" :hand="hand3" />
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-6"></div>
+      <div class="col-6">
+        <div class="bonus-deck deck pe-3">
+          <div class="row pt-4">
+            <div class="col-6 text-uppercase pt-4 ps-5">
+              <div class="bonus-deck-text pt-2">Bónusz-játék</div>
+            </div>
+            <div class="col-6 pt-3 pe-5">
+              <hand class="hand-1" :hand="hand1" />
+            </div>
+          </div>
+          <div class="row pt-1">
+            <div class="col-6 ps-5"><hand class="hand-2" :hand="hand2" /></div>
+            <div class="col-6 pe-5"><hand class="hand-3" :hand="hand3" /></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -56,5 +71,7 @@ export default {
 <style lang="scss">
 .bonus-deck-text {
   hyphens: auto;
+  font-size: 12px;
+  line-height: 10px;
 }
 </style>

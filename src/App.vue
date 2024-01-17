@@ -32,7 +32,6 @@ export default {
 
 .scratch-wrapper {
   z-index: 10;
-  display: none;
 }
 
 .deck-wrapper {
