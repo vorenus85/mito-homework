@@ -1,6 +1,9 @@
 <template>
   <div id="app">
-    <Scratchable class="scratch-wrapper" />
+    <Scratchable
+      class="scratch-wrapper"
+      @percentageUpdated="percentageUpdated($event)"
+    />
     <Deck class="deck-wrapper" />
     <BonusDeck class="bonus-deck-wrapper" />
   </div>
@@ -14,6 +17,18 @@ export default {
   name: "App",
   // components: { MyScratchable },
   components: { Deck, BonusDeck, Scratchable },
+  data() {
+    return {
+      scratchCompleted: false,
+    };
+  },
+  methods: {
+    percentageUpdated(percentage) {
+      if (percentage > 90) {
+        this.scratchCompleted = true;
+      }
+    },
+  },
 };
 </script>
 

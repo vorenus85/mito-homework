@@ -1,4 +1,4 @@
-export const deckNumbers = [
+export const handNumbers = [
   { 2: "Kettő" },
   { 3: "Három" },
   { 4: "Négy" },
@@ -9,6 +9,10 @@ export const deckNumbers = [
   { 9: "Kilenc" },
   { 10: "Tíz" },
   { 11: "T.Egy" },
+];
+
+export const deckNumbers = [
+  ...handNumbers,
   { 12: "T.Kettő" },
   { 13: "T.Három" },
   { 14: "T.Négy" },
@@ -21,10 +25,25 @@ export const deckNumbers = [
   { 21: "Huszonegy" },
 ];
 
-export const prizes = {
-  500: "Ötszáz",
-  1000: "Ezer",
-  5000: "Ötezer",
-  10000: "Tízezer",
-  100000: "Százezer",
+export const winScenarios = {
+  30: {
+    number: 500,
+    text: "Ötszáz",
+  },
+  25: {
+    number: 1000,
+    text: "Ezer",
+  },
+  15: {
+    number: 5000,
+    text: "Ötezer",
+  },
+  10: {
+    number: 10000,
+    text: "Tízezer",
+  },
+  5: {
+    number: 100000,
+    text: "Százezer",
+  },
 };

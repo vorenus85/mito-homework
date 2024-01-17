@@ -5,7 +5,7 @@
       :brushOptions="brush"
       :hideOptions="hide"
       getPercentageCleared
-      @percentageUpdate="updatePoints"
+      @percentage-update="updatePoints"
     >
       <div class="wrapper">
         <img
@@ -26,7 +26,6 @@ export default {
   components: { VueScratchable },
   data() {
     return {
-      percentage: 0,
       hide: {
         type: "pattern",
         src: paperPattern,
@@ -38,6 +37,11 @@ export default {
       },
     };
   },
+  methods: {
+    updatePoints(percentage) {
+      this.$emit("percentageUpdated", percentage);
+    },
+  },
 };
 </script>
 <style>
@@ -47,5 +51,8 @@ export default {
   position: absolute;
   bottom: 24px;
   left: 24px;
+  &:hover {
+    cursor: url("@/assets/svg/coin.svg"), pointer;
+  }
 }
 </style>

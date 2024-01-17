@@ -6,7 +6,9 @@
       </div>
       <div class="col-4">
         <div class="prize pt-2">
-          <span class="prize-number">{{ prize?.number }} Ft</span>
+          <span class="prize-number"
+            >{{ prize?.number | thousandSeparator }} Ft</span
+          >
           <span class="prize-text">{{ prize?.text }}</span>
         </div>
         <hand class="dealer pt-2" :hand="dealer" />
@@ -23,14 +25,31 @@
 <script>
 import Hand from "./Hand.vue";
 import mixins from "@/mixins";
-import { deckNumbers } from "@/numbers";
+import { deckNumbers, winScenarios } from "@/numbers";
 export default {
   components: { Hand },
   mixins: [mixins],
+  filters: {
+    thousandSeparator(value) {
+      if (typeof value !== "number") {
+        return value;
+      }
+
+      // Convert the number to a string
+      const numberString = value.toString();
+
+      // Use regular expression to add dots as thousand separators
+      return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    },
+  },
   data() {
     return {
       deckNumbers,
-      prize: {},
+      deckWin: false,
+      prize: {
+        number: 15000000,
+        text: "Tizenötmillió",
+      },
       dealer: { number: "", text: "" },
       hand1: { number: "", text: "" },
       hand2: { number: "", text: "" },
@@ -40,19 +59,84 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      // player get two-two card by hand so hand lowest value will 4
-      const [, , ...remaining] = this.deckNumbers;
-      this.prize = this.getRandomPrize();
-      this.dealer = this.getRandomHand(remaining);
-      this.hand1 = this.getRandomHand(remaining);
-      this.hand2 = this.getRandomHand(remaining);
-      this.hand3 = this.getRandomHand(remaining);
-      this.hand4 = this.getRandomHand(remaining);
+      this.initDeck();
     });
   },
   methods: {
-    getRandomPrize() {
-      return { number: "100 000", text: "Százezer" };
+    playerWinScenario() {
+      this.dealer = this.generateHandLessThan17();
+      // player get two-two card by hand so hand lowest value will 4
+      const [, , ...remaining] = this.deckNumbers;
+
+      /**
+       * 0 - 25 hand1 is fix winner
+       * 25 - 50 hand2 is fix winner
+       * 50 - 75 hand3 is fix winner
+       * 75 - 100 hand4 is fix winner
+       */
+      const winnerHand = Math.random() * 100;
+
+      this.hand1 = this.getPlayerHandIfPlayerWin(winnerHand, 25);
+      this.hand2 = this.getPlayerHandIfPlayerWin(winnerHand, 50);
+      this.hand3 = this.getPlayerHandIfPlayerWin(winnerHand, 75);
+      this.hand4 =
+        winnerHand >= 75
+          ? this.generateHandMoreThan17()
+          : this.getRandomHand(remaining);
+    },
+    getPlayerHandIfPlayerWin(score, threshold) {
+      // player get two-two card by hand so hand lowest value will 4
+      const [, , ...remaining] = this.deckNumbers;
+      return score <= threshold
+        ? this.generateHandMoreThan17()
+        : this.getRandomHand(remaining);
+    },
+    playerLooseScenario() {
+      this.dealer = this.generateHandMoreThan17();
+      this.hand1 = this.generateHandLessThan17();
+      this.hand2 = this.generateHandLessThan17();
+      this.hand3 = this.generateHandLessThan17();
+      this.hand4 = this.generateHandLessThan17();
+    },
+    generateHandMoreThan17() {
+      // player get two-two card by hand so hand lowest value will 4
+      const [, , ...remaining] = this.deckNumbers;
+      const winnerDeck = remaining.slice(14);
+      return this.getRandomHand(winnerDeck);
+    },
+    generateHandLessThan17() {
+      // player get two-two card by hand so hand lowest value will 4
+      const [, , ...remaining] = this.deckNumbers;
+      const looserDeck = remaining.slice(0, 13);
+      return this.getRandomHand(looserDeck);
+    },
+    setPrize(scenario) {
+      this.prize = scenario;
+    },
+    calcPlayerIsWinOnMainDeck() {
+      return Math.random() * 100;
+    },
+    initDeck() {
+      const score = this.calcPlayerIsWinOnMainDeck();
+
+      this.getRandomPrize(score);
+
+      if (score <= 30) {
+        this.playerWinScenario();
+      } else {
+        this.playerLooseScenario();
+      }
+    },
+    getRandomPrize(score) {
+      const thresholds = Object.keys(winScenarios);
+      const thresholdIndex = thresholds.findIndex(
+        (threshold) => score <= threshold
+      );
+
+      if (score <= 30) {
+        const winScenarioKey = thresholds[thresholdIndex];
+        this.setPrize(winScenarios[winScenarioKey]);
+      }
     },
   },
 };

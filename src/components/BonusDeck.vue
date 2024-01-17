@@ -24,13 +24,14 @@
 <script>
 import Hand from "./Hand.vue";
 import mixins from "@/mixins";
-import { deckNumbers } from "@/numbers";
+import { handNumbers } from "@/numbers";
 export default {
   components: { Hand },
   mixins: [mixins],
   data() {
     return {
-      deckNumbers,
+      bonusDeck: [],
+      handNumbers,
       hand1: { number: "", text: "" },
       hand2: { number: "", text: "" },
       hand3: { number: "", text: "" },
@@ -38,29 +39,52 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.hand1 = this.getRandomHand(this.deckNumbers);
-      this.hand2 = this.getRandomHand(this.deckNumbers);
-      this.hand3 = this.getRandomHand(this.deckNumbers);
+      this.initBonusDeck();
     });
   },
   methods: {
+    initBonusDeck() {
+      const bonusDeckWin = this.generateBonusDeckChance();
+
+      if (bonusDeckWin) {
+        this.bonusDeck = this.generateNumbersWithSum21();
+      } else {
+        this.bonusDeck = this.generateNumbersNotEqual21();
+      }
+
+      const card1 = this.bonusDeck[0];
+      const card2 = this.bonusDeck[1];
+      const card3 = this.bonusDeck[2];
+
+      this.hand1 = this.findCardByNumber(card1, handNumbers);
+      this.hand2 = this.findCardByNumber(card2, handNumbers);
+      this.hand3 = this.findCardByNumber(card3, handNumbers);
+    },
+    generateBonusDeckChance() {
+      const randomValue = Math.random();
+      return randomValue < 0.5;
+    },
+    generateRandomCard2To11() {
+      return Math.floor(Math.random() * 10) + 2;
+    },
     generateNumbersWithSum21() {
-      const randomNumber1 = Math.floor(Math.random() * 10) + 1;
-      const randomNumber2 =
-        Math.floor(Math.random() * (21 - randomNumber1)) + 1;
-      const randomNumber3 = 21 - randomNumber1 - randomNumber2;
+      let sum = 21;
+      let randomNumber1, randomNumber2, randomNumber3;
+      do {
+        randomNumber1 = this.generateRandomCard2To11();
+        randomNumber2 = this.generateRandomCard2To11();
+        randomNumber3 = this.generateRandomCard2To11();
+      } while (randomNumber1 + randomNumber2 + randomNumber3 !== sum);
 
       return [randomNumber1, randomNumber2, randomNumber3];
     },
     generateNumbersNotEqual21() {
       let sum = 21;
-
-      // Generate random numbers until the sum is not equal to 21
       let randomNumber1, randomNumber2, randomNumber3;
       do {
-        randomNumber1 = Math.floor(Math.random() * 10) + 1;
-        randomNumber2 = Math.floor(Math.random() * 10) + 1;
-        randomNumber3 = Math.floor(Math.random() * 10) + 1;
+        randomNumber1 = this.generateRandomCard2To11();
+        randomNumber2 = this.generateRandomCard2To11();
+        randomNumber3 = this.generateRandomCard2To11();
       } while (randomNumber1 + randomNumber2 + randomNumber3 === sum);
 
       return [randomNumber1, randomNumber2, randomNumber3];
