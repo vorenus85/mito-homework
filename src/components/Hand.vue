@@ -6,10 +6,16 @@
 </template>
 <script>
 export default {
+  name: "Hand",
   props: {
     hand: {
       type: Object,
-      default: () => {},
+      default: () => {
+        return {
+          number: "",
+          text: "",
+        };
+      },
     },
   },
   computed: {
@@ -25,8 +31,6 @@ export default {
 <style lang="scss">
 .hand {
   font-weight: 700;
-  position: absolute;
-  width: 70px;
 
   &-number {
     font-size: 40px;

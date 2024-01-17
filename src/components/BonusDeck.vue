@@ -1,5 +1,5 @@
 <template>
-  <div class="bonus-deck">
+  <div class="bonus-deck deck">
     <div class="bonus-deck-text">Bónusz-játék</div>
     <hand class="hand-1" :hand="hand1" />
     <hand class="hand-2" :hand="hand2" />

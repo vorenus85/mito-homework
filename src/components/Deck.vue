@@ -1,14 +1,23 @@
 <template>
-  <div class="deck">
-    <div class="prize">
-      <span class="prize-number">{{ prize?.number }} Ft</span>
-      <span class="prize-text">{{ prize?.text }}</span>
+  <div class="deck d-flex flex-column container-fluid">
+    <div class="row">
+      <div class="col-4">
+        <hand class="hand-1 ps-2 pt-2" :hand="hand1" />
+      </div>
+      <div class="col-4">
+        <div class="prize pt-2">
+          <span class="prize-number">{{ prize?.number }} Ft</span>
+          <span class="prize-text">{{ prize?.text }}</span>
+        </div>
+        <hand class="dealer pt-2" :hand="dealer" />
+      </div>
+      <div class="col-4"><hand class="hand-3 pe-2 pt-2" :hand="hand3" /></div>
     </div>
-    <hand class="dealer" :hand="dealer" />
-    <hand class="hand-1" :hand="hand1" />
-    <hand class="hand-2" :hand="hand2" />
-    <hand class="hand-3" :hand="hand3" />
-    <hand class="hand-4" :hand="hand4" />
+    <div class="row pt-3">
+      <div class="col-4 ps-4"><hand class="hand-2 ps-5" :hand="hand2" /></div>
+      <div class="col-4"></div>
+      <div class="col-4 pe-4"><hand class="hand-4 pe-5" :hand="hand4" /></div>
+    </div>
   </div>
 </template>
 <script>
@@ -61,11 +70,7 @@ export default {
 
 .prize {
   font-weight: 700;
-  position: absolute;
   line-height: 10px;
-  width: 150px;
-  top: 10px;
-  left: calc(50% - 75px);
 
   &-number {
     display: block;
@@ -81,32 +86,9 @@ export default {
 
 .hand {
   &.dealer {
-    top: 40px;
-    left: calc(50% - 35px);
-
     .hand-number {
       font-family: "Roboto Mono", sans-serif;
     }
-  }
-
-  &-1 {
-    top: 5px;
-    left: 45px;
-  }
-
-  &-2 {
-    top: 5px;
-    right: 45px;
-  }
-
-  &-3 {
-    top: 110px;
-    left: 75px;
-  }
-
-  &-4 {
-    top: 110px;
-    right: 75px;
   }
 }
 </style>

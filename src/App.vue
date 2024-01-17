@@ -1,18 +1,19 @@
 <template>
   <div id="app">
-    <Deck />
-    <BonusDeck />
+    <Scratchable class="scratch-wrapper" />
+    <Deck class="deck-wrapper" />
+    <BonusDeck class="bonus-deck-wrapper" />
   </div>
 </template>
 
 <script>
 import BonusDeck from "./components/BonusDeck.vue";
 import Deck from "./components/Deck.vue";
-// import MyScratchable from "./components/Scratchable.vue";
+import Scratchable from "./components/Scratchable.vue";
 export default {
   name: "App",
   // components: { MyScratchable },
-  components: { Deck, BonusDeck },
+  components: { Deck, BonusDeck, Scratchable },
 };
 </script>
 
@@ -22,10 +23,23 @@ export default {
   text-align: center;
   color: #000;
   background: #000 url("./assets/svg/background.svg");
-  width: 442px;
-  height: 782px;
+  max-width: 442px;
+  min-height: 782px;
   margin: 0 auto;
   position: relative;
   padding-top: 350px;
+}
+
+.scratch-wrapper {
+  z-index: 10;
+  display: none;
+}
+
+.deck-wrapper {
+  z-index: 9;
+}
+
+.bonus-deck-wrapper {
+  z-index: 9;
 }
 </style>
