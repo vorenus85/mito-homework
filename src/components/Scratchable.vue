@@ -1,5 +1,5 @@
 <template>
-  <div class="scratch-wrapper">
+  <div class="scratch">
     <vue-scratchable
       v-slot="{ init }"
       :brushOptions="brush"
@@ -9,7 +9,7 @@
     >
       <div class="wrapper">
         <img
-          :src="require('./../assets/deck.svg')"
+          :src="require('./../assets/svg/deck.svg')"
           @load="init()"
           alt="Black Jack Deck"
         />
@@ -19,9 +19,10 @@
 </template>
 <script>
 import VueScratchable from "vue-scratchable";
-import paperPattern from "./../assets/scratch.svg";
+import paperPattern from "./../assets/svg/scratch.svg";
 
 export default {
+  name: "Scratchable",
   components: { VueScratchable },
   data() {
     return {
@@ -40,7 +41,7 @@ export default {
 };
 </script>
 <style>
-.scratch-wrapper {
+.scratch {
   width: 394px;
   height: 431px;
   position: absolute;
