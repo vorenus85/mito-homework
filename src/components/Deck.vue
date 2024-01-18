@@ -7,9 +7,9 @@
       <div class="col-4">
         <div class="prize pt-2">
           <span class="prize-number"
-            >{{ prize?.number | thousandSeparator }} Ft</span
+            >{{ prize.number | thousandSeparator }} Ft</span
           >
-          <span class="prize-text">{{ prize?.text }}</span>
+          <span class="prize-text">{{ prize.text }}</span>
         </div>
         <hand class="dealer pt-2" :hand="dealer" />
       </div>
@@ -35,10 +35,8 @@ export default {
         return value;
       }
 
-      // Convert the number to a string
       const numberString = value.toString();
 
-      // Use regular expression to add dots as thousand separators
       return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     },
   },
@@ -147,7 +145,6 @@ export default {
 };
 </script>
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Inconsolata:wght@700&family=Roboto+Mono:wght@700&display=swap");
 .deck {
   font-family: "Inconsolata", sans-serif;
   height: 180px;

@@ -15,7 +15,6 @@ import Deck from "./components/Deck.vue";
 import Scratchable from "./components/Scratchable.vue";
 export default {
   name: "App",
-  // components: { MyScratchable },
   components: { Deck, BonusDeck, Scratchable },
   data() {
     return {

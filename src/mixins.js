@@ -24,7 +24,7 @@ export default {
       if (hand) {
         const handNumber = Object.keys(hand)[0];
         const handText = Object.values(hand)[0];
-        result = { number: handNumber, text: handText };
+        result = { number: parseInt(handNumber, 10), text: handText };
       }
       return result;
     },
