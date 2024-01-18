@@ -136,6 +136,11 @@ export default {
       if (score <= 30) {
         const winScenarioKey = thresholds[thresholdIndex];
         this.setPrize(winScenarios[winScenarioKey]);
+        this.$store.dispatch("setMainDeckIsWin", true);
+        this.$store.dispatch(
+          "setMainDeckPrize",
+          winScenarios[winScenarioKey].number
+        );
       }
     },
   },

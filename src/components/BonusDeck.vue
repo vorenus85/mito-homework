@@ -48,6 +48,8 @@ export default {
 
       if (bonusDeckWin) {
         this.bonusDeck = this.generateNumbersWithSum21();
+        this.$store.dispatch("setBonusDeckIsWin", true);
+        this.$store.dispatch("setBonusDeckPrize", 1000);
       } else {
         this.bonusDeck = this.generateNumbersNotEqual21();
       }
